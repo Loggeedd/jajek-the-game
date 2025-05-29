@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <audio id="backgroundMusic" loop>
+            <source src="sounds/song.mp3" type="audio/mpeg">
+        </audio>
+        <title>Jajek The Game</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+            body {
+                background-color: #111;
+                color: white;
+                font-family: "Josefin Sans", sans-serif;
+                text-align: center; 
+                padding-top: 50px;
+            }
+            .form-container {
+                max-width: 500px;
+                margin: 0 auto;
+                background: #222;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            }
+            input {
+                width: 80%;
+                padding: 10px;
+                margin: 15px 0;
+                font-family: "Josefin Sans", sans-serif;
+                background: #333;
+                color: white;
+                border: 1px solid #444;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+            button {
+                padding: 10px 25px;
+                background: #444;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-family: "Josefin Sans", sans-serif;
+                font-size: 16px;
+                transition: background 0.2s;
+                margin-top: 20px;
+            }
+            button:hover {
+                background: #555;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+                text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            }
+            .character-selection {
+                display: flex;
+                justify-content: space-around;
+                margin: 20px 0;
+            }
+            .character-option {
+                width: 80px;
+                height: 80px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.2s;
+                overflow: hidden;
+            }
+            .character-option img {
+                width: 70%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .character-option.selected {
+                border-color: #fff;
+                box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="form-container">
+            <h1>Wpisz swoją nazwę dżajkaa</h1>
+            <form id="form">
+                <input type="text" id="username" placeholder="Twój nick" required maxlength="12"/>
+                
+                <div class="character-selection">
+                    <div class="character-option" data-character="player1.png">
+                        <img src="images/player1.png" alt="Postać 1">
+                    </div>
+                    <div class="character-option" data-character="player2.png">
+                        <img src="images/player2.png" alt="Postać 2">
+                    </div>
+                    <div class="character-option" data-character="player3.png">
+                        <img src="images/player3.png" alt="Postać 3">
+                    </div>
+                </div>
+                
+                <button type="submit">Zjajkuj się</button>
+            </form>
+        </div>
+        <script>
+            // Wybór postaci
+            const characterOptions = document.querySelectorAll('.character-option');
+            let selectedCharacter = 'player1.png';
+            
+            characterOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    characterOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedCharacter = option.dataset.character;
+                });
+            });
+            
+            // Wybierz domyślnie pierwszą postać
+            characterOptions[0].classList.add('selected');
+            
+            // Formularz
+            document.getElementById("form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const name = document.getElementById("username").value.trim();
+                if (name.length === 0) return;
+                window.location.href = `gra.html?name=${encodeURIComponent(name)}&character=${encodeURIComponent(selectedCharacter)}`;
+            });
+        </script>
+    </body>
+</html>
